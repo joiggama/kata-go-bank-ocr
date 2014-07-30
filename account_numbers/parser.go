@@ -74,17 +74,15 @@ func LoadDictionary() {
 	}
 }
 
-func Parse(fileName string) {
+func Parse(fileName string) (accountNumbers []string) {
 	LoadDictionary()
 	contents := ReadFile(fileName)
 	entries := GetEntries(contents)
 	fmt.Println("Found", len(entries), "entries in", fileName)
 
-	var accountNumbers []string
-
 	for _, entry := range entries {
 		accountNumbers = append(accountNumbers, ParseEntry(entry))
 	}
 
-	fmt.Println(accountNumbers)
+	return accountNumbers
 }
