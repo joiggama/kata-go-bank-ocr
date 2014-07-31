@@ -2,12 +2,23 @@ package account_numbers
 
 import (
 	"math"
+  "regexp"
 	"strconv"
 	"strings"
 )
 
-func IsValid(accountNumber string) (result bool) {
-	return CheckSum(accountNumber) == 0
+func IsValid(accountNumber string) (result bool, state string) {
+
+  if ill := regexp.MustCompile(`\?`).MatchString(accountNumber) ; ill == true {
+    return false, "ILL"
+  }
+
+  if checksum := CheckSum(accountNumber) ; checksum == 0 {
+    return true, ""
+  } else {
+    return false, "ERR"
+  }
+
 }
 
 func CheckSum(accountNumber string) (res int) {

@@ -25,7 +25,11 @@ func ParseEntry(entry string) string {
 	var digits string
 
 	for _, digit := range GetDigits(entry, 27) {
-		digits += ParseDigit(digit)
+    if value := ParseDigit(digit) ; value != "" {
+      digits += value
+    } else {
+      digits += "?"
+    }
 	}
 
 	return digits
@@ -62,7 +66,7 @@ func GetDigits(entry string, lineLength int) []string {
 }
 
 func GetEntries(content string) []string {
-	return regexp.MustCompile(`\t*\n\n`).Split(content, -1)
+	return regexp.MustCompile(`\s{27}\n`).Split(content, -1)
 }
 
 func LoadDictionary() {
